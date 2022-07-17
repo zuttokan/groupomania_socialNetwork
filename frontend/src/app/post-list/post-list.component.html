@@ -1,0 +1,28 @@
+<ng-container *ngIf="posts$ | async as posts">
+  <p *ngIf="!loading && posts.length <= 0">Il n'y a aucun MEssage en ligne !</p>
+  <p class="list-title" *ngIf="!loading && posts.length > 0">
+    Click sur une photo pour Liker !! (ou pas...)
+  </p>
+  <div class="post-list" *ngIf="!loading && posts.length > 0">
+    <div class="post-list-item" *ngFor="let post of posts">
+      <div class="info-user">
+        Username :{{ post.username }}
+        <!-- <h4></h4> -->
+        <div>
+          <p>
+            Mise en ligne à
+            {{ post.createdDate | date: "HH:mm, le d MMMM yyyy" }}
+          </p>
+        </div>
+      </div>
+
+      <img
+        (click)="onClickPost(post._id)"
+        alt="Hot post bottle"
+        [src]="post.imageUrl"
+      />
+
+      <p>{{ post.description }}</p>
+    </div>
+  </div>
+</ng-container>

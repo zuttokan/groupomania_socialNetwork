@@ -1,0 +1,50 @@
+<nav>
+  <div class="left-nav">
+    <ul>
+      <li>
+        <a routerLink="posts" routerLinkActive="active" *ngIf="isAuth$ | async">
+          Tous les Messages
+        </a>
+      </li>
+      <li>
+        <a
+          routerLink="new-post"
+          routerLinkActive="active"
+          *ngIf="isAuth$ | async"
+        >
+          Ajouter un Message
+        </a>
+      </li>
+    </ul>
+  </div>
+  <div class="logo">
+    <div class="logo-image">
+      <img alt="Flame logo" src="../../assets/images/icon-left-font rs.png" />
+    </div>
+  </div>
+  <div class="right-nav">
+    <ul>
+      <li>
+        <a
+          routerLink="signup"
+          routerLinkActive="active"
+          *ngIf="!(isAuth$ | async)"
+        >
+          INSCRIPTION
+        </a>
+      </li>
+      <li>
+        <a
+          routerLink="login"
+          routerLinkActive="active"
+          *ngIf="!(isAuth$ | async)"
+        >
+          CONNECTION
+        </a>
+      </li>
+      <li>
+        <a (click)="onLogout()" *ngIf="isAuth$ | async"> Déconnexion </a>
+      </li>
+    </ul>
+  </div>
+</nav>

@@ -1,0 +1,41 @@
+.post-list {
+  display: flex;
+  justify-content: space-around;
+  flex-wrap: wrap;
+}
+
+.post-list-item {
+  display: flex;
+  justify-content: space-around;
+  flex-wrap: wrap;
+  width: 100%;
+  box-shadow: 1px 1px 20px rgba(120, 120, 120, 0.3);
+  margin: 5px;
+  img {
+    padding: 15px;
+    max-width: 200px;
+    max-height: 200px;
+    cursor: pointer;
+    transition: all 0.1s ease-in-out;
+    text-align: left;
+
+    &:hover {
+      transform: scale(1.05);
+    }
+  }
+  p {
+    text-align: center;
+    margin: auto;
+  }
+}
+
+.list-title {
+  text-align: center;
+  margin: 5px;
+}
+.post-form {
+  box-shadow: rgb(80, 75, 75) 4px 4px 20px;
+}
+.info-user {
+  padding: 30px;
+}
