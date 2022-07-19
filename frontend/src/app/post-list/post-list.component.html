@@ -7,7 +7,7 @@
 
         <div>
           <p>
-            à
+            Mis en ligne à
             {{ post.createdDate | date: "HH:mm, le d MMMM yyyy" }}
           </p>
         </div>
@@ -28,7 +28,7 @@
             [ngClass]="{ 'fas liked': liked, far: !liked, disabled: disliked }"
             class="like fa-thumbs-up fa-lg"
           ></i>
-          <!-- <span>{{ post.likes }}</span> -->
+          <span>{{ post.likes }}</span>
         </div>
         <div class="dislikes">
           <i
@@ -39,7 +39,7 @@
             }"
             class="dislike fa-thumbs-down fa-lg"
           ></i>
-          <!-- <span>{{ post.dislikes }}</span> -->
+          <span>{{ post.dislikes }}</span>
         </div>
       </div>
 
@@ -48,6 +48,7 @@
         <button
           class="buttonModify"
           mat-raised-button
+          (click)="onModify()"
           *ngIf="userId === post.userId || admin"
         >
           Modifier
@@ -58,10 +59,9 @@
           *ngIf="userId === post.userId || admin"
         >
           Supprimer
-          <!-- (click)="onModify()"
-          (click)="onDelete()" -->
         </button>
       </div>
     </div>
   </div>
 </ng-container>
+<!-- (click)="onDelete()" -->

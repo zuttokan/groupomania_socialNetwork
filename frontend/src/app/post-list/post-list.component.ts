@@ -1,6 +1,15 @@
 import { Component, OnInit } from '@angular/core';
 import { PostsService } from '../services/posts.service';
-import { catchError, Observable, of, tap, take, switchMap, EMPTY } from 'rxjs';
+import {
+  catchError,
+  Observable,
+  of,
+  tap,
+  take,
+  switchMap,
+  EMPTY,
+  map,
+} from 'rxjs';
 import { Post } from '../models/Post.model';
 import { Router } from '@angular/router';
 import { AuthService } from '../services/auth.service';
@@ -11,6 +20,7 @@ import { AuthService } from '../services/auth.service';
 })
 export class PostListComponent implements OnInit {
   posts$!: Observable<Post[]>;
+  post$!: Observable<Post>;
   errorMsg!: string;
   userId!: string;
   admin!: string;
@@ -45,20 +55,20 @@ export class PostListComponent implements OnInit {
     this.router.navigate(['post', id]);
   }
 
-  onModify(id: string) {
-    this.posts$
+  onModify() {
+    this.post$
       .pipe(
         take(1),
-        tap((post) => this.router.navigate(['/modify-post', id]))
+        tap((post) => this.router.navigate(['/modify-post', post._id]))
       )
       .subscribe();
   }
 
-  // onDelete(id: string) {
-  //   this.posts$
+  // onDelete() {
+  //   this.post$
   //     .pipe(
   //       take(1),
-  //       switchMap((post) => this.posts$.deletePost(id)),
+  //       switchMap((post) => this.posts$.deletePost(post._id)),
   //       tap((message) => {
   //         console.log(message);
   //         this.router.navigate(['/posts']);
@@ -72,53 +82,53 @@ export class PostListComponent implements OnInit {
   //     .subscribe();
   // }
 
-  // onLike() {
-  //   if (this.disliked) {
-  //     return;
-  //   }
-  //   this.likePending = true;
-  //   this.post$
-  //     .pipe(
-  //       take(1),
-  //       switchMap((post: Post) =>
-  //         this.posts.likePost(post._id, !this.liked).pipe(
-  //           tap((liked) => {
-  //             this.likePending = false;
-  //             this.liked = liked;
-  //           }),
-  //           map((liked) => ({
-  //             ...post,
-  //             likes: liked ? post.likes + 1 : post.likes - 1,
-  //           })),
-  //           tap((post) => (this.post$ = of(post)))
-  //         )
-  //       )
-  //     )
-  //     .subscribe();
-  // }
+  onLike() {
+    if (this.disliked) {
+      return;
+    }
+    this.likePending = true;
+    this.post$
+      .pipe(
+        take(1),
+        switchMap((post: Post) =>
+          this.post.likePost(post._id, !this.liked).pipe(
+            tap((liked) => {
+              this.likePending = false;
+              this.liked = liked;
+            }),
+            map((liked) => ({
+              ...post,
+              likes: liked ? post.likes + 1 : post.likes - 1,
+            })),
+            tap((post) => (this.post$ = of(post)))
+          )
+        )
+      )
+      .subscribe();
+  }
 
-  // onDislike() {
-  //   if (this.liked) {
-  //     return;
-  //   }
-  //   this.likePending = true;
-  //   this.post$
-  //     .pipe(
-  //       take(1),
-  //       switchMap((post: Post) =>
-  //         this.posts.dislikePost(post._id, !this.disliked).pipe(
-  //           tap((disliked) => {
-  //             this.likePending = false;
-  //             this.disliked = disliked;
-  //           }),
-  //           map((disliked) => ({
-  //             ...post,
-  //             dislikes: disliked ? post.dislikes + 1 : post.dislikes - 1,
-  //           })),
-  //           tap((post) => (this.post$ = of(post)))
-  //         )
-  //       )
-  //     )
-  //     .subscribe();
-  // }
+  onDislike() {
+    if (this.liked) {
+      return;
+    }
+    this.likePending = true;
+    this.post$
+      .pipe(
+        take(1),
+        switchMap((post: Post) =>
+          this.post.dislikePost(post._id, !this.disliked).pipe(
+            tap((disliked) => {
+              this.likePending = false;
+              this.disliked = disliked;
+            }),
+            map((disliked) => ({
+              ...post,
+              dislikes: disliked ? post.dislikes + 1 : post.dislikes - 1,
+            })),
+            tap((post) => (this.post$ = of(post)))
+          )
+        )
+      )
+      .subscribe();
+  }
 }
