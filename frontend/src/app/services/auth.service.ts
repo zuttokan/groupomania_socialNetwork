@@ -10,6 +10,8 @@ export class AuthService {
   isAuth$ = new BehaviorSubject<boolean>(false);
   private authToken = '';
   private userId = '';
+  private username = '';
+  private admin = '';
 
   constructor(private http: HttpClient, private router: Router) {}
 
@@ -27,7 +29,12 @@ export class AuthService {
   getUserId() {
     return this.userId;
   }
-
+  getUsername() {
+    return this.username;
+  }
+  getAdmin() {
+    return this.admin;
+  }
   loginUser(email: string, password: string) {
     return this.http
       .post<{ userId: string; token: string }>(

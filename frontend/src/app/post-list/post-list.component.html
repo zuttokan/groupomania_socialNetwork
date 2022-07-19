@@ -3,7 +3,7 @@
   <div class="post-list">
     <div class="post-list-item" *ngFor="let post of posts">
       <div class="info-user">
-        Username :{{ post.username }}
+        Username :{{ username }}
 
         <div>
           <p>
@@ -18,8 +18,32 @@
         alt="message"
         [src]="post.imageUrl"
       />
+      <div class="description-post">
+        <p>{{ post.description }}</p>
+      </div>
 
-      <p>{{ post.description }}</p>
+      <div class="like-buttons" *ngIf="!likePending">
+        <div class="likes">
+          <i
+            [ngClass]="{ 'fas liked': liked, far: !liked, disabled: disliked }"
+            class="like fa-thumbs-up fa-lg"
+          ></i>
+          <!-- <span>{{ post.likes }}</span> -->
+        </div>
+        <div class="dislikes">
+          <i
+            [ngClass]="{
+              'fas disliked': disliked,
+              far: !disliked,
+              disabled: liked
+            }"
+            class="dislike fa-thumbs-down fa-lg"
+          ></i>
+          <!-- <span>{{ post.dislikes }}</span> -->
+        </div>
+      </div>
+
+      <!-- (click)="onLike()" (click)="onDislike()" -->
       <div>
         <button
           class="buttonModify"
@@ -41,26 +65,3 @@
     </div>
   </div>
 </ng-container>
-
-<!-- <div class="like-buttons" *ngIf="!likePending">
-  <div class="likes">
-    <i
-      [ngClass]="{ 'fas liked': liked, far: !liked, disabled: disliked }"
-      class="like fa-thumbs-up fa-lg"
-      (click)="onLike()"
-    ></i>
-    <span>{{ post.likes }}</span>
-  </div>
-  <div class="dislikes">
-    <i
-      [ngClass]="{
-        'fas disliked': disliked,
-        far: !disliked,
-        disabled: liked
-      }"
-      class="dislike fa-thumbs-down fa-lg"
-      (click)="onDislike()"
-    ></i>
-    <span>{{ post.dislikes }}</span>
-  </div>
-</div> -->

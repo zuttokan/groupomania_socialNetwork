@@ -12,11 +12,13 @@ import { AuthService } from '../services/auth.service';
 export class PostListComponent implements OnInit {
   posts$!: Observable<Post[]>;
   errorMsg!: string;
-  //username$!: Observable<Post[]>;
   userId!: string;
   admin!: string;
   username!: string;
   createdDate!: Date;
+  likePending!: boolean;
+  liked!: boolean;
+  disliked!: boolean;
   constructor(
     private post: PostsService,
     private router: Router,
@@ -24,8 +26,8 @@ export class PostListComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    //this.username =
-    //this.admin = ;
+    this.username = this.auth.getUsername();
+    this.admin = this.auth.getAdmin();
     this.userId = this.auth.getUserId();
     this.posts$ = this.post.posts$.pipe(
       tap(() => {
