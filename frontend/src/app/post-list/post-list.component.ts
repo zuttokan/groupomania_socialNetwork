@@ -22,6 +22,7 @@ export class PostListComponent implements OnInit {
   posts$!: Observable<Post[]>;
   post$!: Observable<Post>;
   errorMsg!: string;
+  errorMessage!: string;
   userId!: string;
   admin!: string;
   username!: string;
@@ -64,23 +65,23 @@ export class PostListComponent implements OnInit {
       .subscribe();
   }
 
-  // onDelete() {
-  //   this.post$
-  //     .pipe(
-  //       take(1),
-  //       switchMap((post) => this.posts$.deletePost(post._id)),
-  //       tap((message) => {
-  //         console.log(message);
-  //         this.router.navigate(['/posts']);
-  //       }),
-  //       catchError((error) => {
-  //         //this.errorMessage = error.message;
-  //         console.error(error);
-  //         return EMPTY;
-  //       })
-  //     )
-  //     .subscribe();
-  // }
+  onDelete() {
+    this.post$
+      .pipe(
+        take(1),
+        switchMap((post) => this.post.deletePost(post._id)),
+        tap((message) => {
+          console.log(message);
+          this.router.navigate(['/posts']);
+        }),
+        catchError((error) => {
+          this.errorMessage = error.message;
+          console.error(error);
+          return EMPTY;
+        })
+      )
+      .subscribe();
+  }
 
   onLike() {
     if (this.disliked) {

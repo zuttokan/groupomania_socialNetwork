@@ -3,7 +3,7 @@
   <div class="post-list">
     <div class="post-list-item" *ngFor="let post of posts">
       <div class="info-user">
-        Username :{{ username }}
+        Username :{{ post.username }}
 
         <div>
           <p>
@@ -27,6 +27,7 @@
           <i
             [ngClass]="{ 'fas liked': liked, far: !liked, disabled: disliked }"
             class="like fa-thumbs-up fa-lg"
+            (click)="onLike()"
           ></i>
           <span>{{ post.likes }}</span>
         </div>
@@ -38,12 +39,12 @@
               disabled: liked
             }"
             class="dislike fa-thumbs-down fa-lg"
+            (click)="onDislike()"
           ></i>
           <span>{{ post.dislikes }}</span>
         </div>
       </div>
 
-      <!-- (click)="onLike()" (click)="onDislike()" -->
       <div>
         <button
           class="buttonModify"
@@ -56,6 +57,7 @@
         <button
           class="buttonDelete"
           mat-raised-button
+          (click)="onDelete()"
           *ngIf="userId === post.userId || admin"
         >
           Supprimer
@@ -64,4 +66,3 @@
     </div>
   </div>
 </ng-container>
-<!-- (click)="onDelete()" -->
