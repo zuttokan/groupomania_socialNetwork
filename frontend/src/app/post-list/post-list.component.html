@@ -1,16 +1,13 @@
 <ng-container *ngIf="posts$ | async as posts">
-  <p *ngIf="!loading && posts.length <= 0">Il n'y a aucun MEssage en ligne !</p>
-  <p class="list-title" *ngIf="!loading && posts.length > 0">
-    Click sur une photo pour Liker !! (ou pas...)
-  </p>
-  <div class="post-list" *ngIf="!loading && posts.length > 0">
+  <p class="list-title">Click sur une photo pour l'agrandir !</p>
+  <div class="post-list">
     <div class="post-list-item" *ngFor="let post of posts">
       <div class="info-user">
         Username :{{ post.username }}
-        <!-- <h4></h4> -->
+
         <div>
           <p>
-            Mise en ligne à
+            à
             {{ post.createdDate | date: "HH:mm, le d MMMM yyyy" }}
           </p>
         </div>
@@ -18,11 +15,52 @@
 
       <img
         (click)="onClickPost(post._id)"
-        alt="Hot post bottle"
+        alt="message"
         [src]="post.imageUrl"
       />
 
       <p>{{ post.description }}</p>
+      <div>
+        <button
+          class="buttonModify"
+          mat-raised-button
+          *ngIf="userId === post.userId || admin"
+        >
+          Modifier
+        </button>
+        <button
+          class="buttonDelete"
+          mat-raised-button
+          *ngIf="userId === post.userId || admin"
+        >
+          Supprimer
+          <!-- (click)="onModify()"
+          (click)="onDelete()" -->
+        </button>
+      </div>
     </div>
   </div>
 </ng-container>
+
+<!-- <div class="like-buttons" *ngIf="!likePending">
+  <div class="likes">
+    <i
+      [ngClass]="{ 'fas liked': liked, far: !liked, disabled: disliked }"
+      class="like fa-thumbs-up fa-lg"
+      (click)="onLike()"
+    ></i>
+    <span>{{ post.likes }}</span>
+  </div>
+  <div class="dislikes">
+    <i
+      [ngClass]="{
+        'fas disliked': disliked,
+        far: !disliked,
+        disabled: liked
+      }"
+      class="dislike fa-thumbs-down fa-lg"
+      (click)="onDislike()"
+    ></i>
+    <span>{{ post.dislikes }}</span>
+  </div>
+</div> -->

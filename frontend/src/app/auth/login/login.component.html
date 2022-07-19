@@ -1,8 +1,7 @@
-<!-- <mat-spinner *ngIf="loading"></mat-spinner> -->
 <p class="wellcome-title">Bienvenue sur votre réseau social d'entreprise</p>
 <p class="connected-title">Connectez-vous !</p>
 
-<form [formGroup]="loginForm" *ngIf="!loading">
+<form [formGroup]="loginForm">
   <div class="form-group">
     <label for="email">Email</label>
     <input

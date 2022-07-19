@@ -14,7 +14,6 @@ import { catchError, EMPTY, switchMap, tap } from 'rxjs';
 export class PostFormComponent implements OnInit {
   postForm!: FormGroup;
   mode!: string;
-  loading!: boolean;
   post!: Post;
   errorMsg!: string;
   imagePreview!: string;
@@ -28,14 +27,12 @@ export class PostFormComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    this.loading = true;
     this.route.params
       .pipe(
         switchMap((params) => {
           if (!params['id']) {
             this.mode = 'new';
             this.initEmptyForm();
-            this.loading = false;
             return EMPTY;
           } else {
             this.mode = 'edit';
@@ -46,7 +43,6 @@ export class PostFormComponent implements OnInit {
           if (post) {
             this.post = post;
             this.initModifyForm(post);
-            this.loading = false;
           }
         }),
         catchError((error) => (this.errorMsg = JSON.stringify(error)))
@@ -70,7 +66,6 @@ export class PostFormComponent implements OnInit {
   }
 
   onSubmit() {
-    this.loading = true;
     const newPost = new Post();
     newPost.description = this.postForm.get('description')!.value;
     newPost.userId = this.auth.getUserId();
@@ -80,12 +75,10 @@ export class PostFormComponent implements OnInit {
         .pipe(
           tap(({ message }) => {
             console.log(message);
-            this.loading = false;
             this.router.navigate(['/posts']);
           }),
           catchError((error) => {
             console.error(error);
-            this.loading = false;
             this.errorMsg = error.message;
             return EMPTY;
           })
@@ -97,12 +90,10 @@ export class PostFormComponent implements OnInit {
         .pipe(
           tap(({ message }) => {
             console.log(message);
-            this.loading = false;
             this.router.navigate(['/posts']);
           }),
           catchError((error) => {
             console.error(error);
-            this.loading = false;
             this.errorMsg = error.message;
             return EMPTY;
           })

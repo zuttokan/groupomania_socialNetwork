@@ -20,13 +20,14 @@ import {
   styleUrls: ['./single-post.component.scss'],
 })
 export class SinglePostComponent implements OnInit {
-  loading!: boolean;
   post$!: Observable<Post>;
   userId!: string;
   likePending!: boolean;
   liked!: boolean;
   disliked!: boolean;
   errorMessage!: string;
+  //admin!: string;
+  //createdDate!: Date;
 
   constructor(
     private posts: PostsService,
@@ -37,13 +38,10 @@ export class SinglePostComponent implements OnInit {
 
   ngOnInit() {
     this.userId = this.auth.getUserId();
-    this.loading = true;
-    this.userId = this.auth.getUserId();
     this.post$ = this.route.params.pipe(
       map((params) => params['id']),
       switchMap((id) => this.posts.getPostById(id)),
       tap((post) => {
-        this.loading = false;
         if (post.usersLiked.find((user) => user === this.userId)) {
           this.liked = true;
         } else if (post.usersDisliked.find((user) => user === this.userId)) {
@@ -117,18 +115,15 @@ export class SinglePostComponent implements OnInit {
   }
 
   onDelete() {
-    this.loading = true;
     this.post$
       .pipe(
         take(1),
         switchMap((post) => this.posts.deletePost(post._id)),
         tap((message) => {
           console.log(message);
-          this.loading = false;
           this.router.navigate(['/posts']);
         }),
         catchError((error) => {
-          this.loading = false;
           this.errorMessage = error.message;
           console.error(error);
           return EMPTY;

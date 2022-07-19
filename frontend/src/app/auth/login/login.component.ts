@@ -11,7 +11,6 @@ import { catchError, EMPTY, tap } from 'rxjs';
 })
 export class LoginComponent implements OnInit {
   loginForm!: FormGroup;
-  loading!: boolean;
   errorMsg!: string;
 
   constructor(
@@ -28,18 +27,15 @@ export class LoginComponent implements OnInit {
   }
 
   onLogin() {
-    this.loading = true;
     const email = this.loginForm.get('email')!.value;
     const password = this.loginForm.get('password')!.value;
     this.auth
       .loginUser(email, password)
       .pipe(
         tap(() => {
-          this.loading = false;
           this.router.navigate(['/posts']);
         }),
         catchError((error) => {
-          this.loading = false;
           this.errorMsg = error.message;
           return EMPTY;
         })

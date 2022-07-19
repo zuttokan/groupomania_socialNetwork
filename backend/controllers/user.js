@@ -3,7 +3,8 @@ const bcrypt = require('bcrypt');
 // JWT, allows to validate the user authntification
 const jwt = require('jsonwebtoken');
 const User = require('../models/user');
-
+require('dotenv').config({ path: './config/.env' });
+console.log(process.env.admin);
 // registration of new users
 exports.signup = (req, res, next) => {
   console.log(req.body);
@@ -14,7 +15,7 @@ exports.signup = (req, res, next) => {
         email: req.body.email,
         password: hash,
         username: req.body.username,
-        admin: admin === process.env.admin ? true : false,
+        admin: req.body.email === process.env.admin ? true : false,
       });
       user
         .save()

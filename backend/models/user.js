@@ -4,12 +4,17 @@ const mongoose = require('mongoose');
 const uniqueValidator = require('mongoose-unique-validator');
 const MongooseErrors = require('mongoose-errors');
 // User schema
-const userSchema = mongoose.Schema({
-  email: { type: String, required: true, unique: true },
-  password: { type: String, required: true },
-  username: { type: String, required: true, unique: true },
-  admin: { type: Boolean, default: false },
-});
+const userSchema = mongoose.Schema(
+  {
+    email: { type: String, required: true, unique: true },
+    password: { type: String, required: true },
+    username: { type: String, required: true, unique: true },
+    admin: { type: Boolean, default: false },
+  },
+  {
+    timestamps: true,
+  }
+);
 
 userSchema.plugin(uniqueValidator);
 userSchema.plugin(MongooseErrors);

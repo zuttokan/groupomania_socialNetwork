@@ -1,5 +1,6 @@
 // call the model post
 const Post = require('../models/post');
+
 // fs, for modify the file system, including the functions to delete
 const fs = require('fs');
 const jwt = require('jsonwebtoken');
@@ -14,6 +15,10 @@ exports.createPost = (req, res, next) => {
       req.file.filename
     }`,
   });
+  // description: description.req.body,
+  // imageUrl: imageUrl.req.body,
+  // username: username.req.body,
+
   post
     .save()
     .then(() => res.status(201).json({ message: 'registered object !' }))
@@ -47,6 +52,9 @@ exports.modifyPost = (req, res, next) => {
         imageUrl: `${req.protocol}://${req.get('host')}/images/${
           req.file.filename
         }`,
+        // description: description.req.body,
+        // imageUrl: imageUrl.req.body,
+        // username: username.req.body,
       }
     : { ...req.body };
 
@@ -95,9 +103,12 @@ exports.getAllPosts = (req, res, next) => {
       res.status(200).json(posts);
     })
     .catch((error) => {
-      res.status(400).json({
-        error: error,
-      });
+      res
+        .status(400)
+        .json({
+          error: error,
+        })
+        .sort({ createdAt: -1 });
     });
 };
 

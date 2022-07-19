@@ -28,7 +28,25 @@
     margin: auto;
   }
 }
-
+button {
+  width: 95px;
+  height: 35px;
+  display: block;
+  margin: 20px auto;
+  background-color: #ffd7d7;
+  color: rgb(0, 0, 0);
+  transition: 0.5s;
+  border-radius: 50px;
+  margin: 8px;
+  color: #4e5166;
+}
+button:hover {
+  box-shadow: #fd2d01 4px 4px 10px;
+  cursor: pointer;
+}
+.buttonDelete {
+  color: #fd2d01;
+}
 .list-title {
   text-align: center;
   margin: 5px;
